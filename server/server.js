@@ -12,7 +12,9 @@ var Todo = mongoose.model('Todo', {
 
     },
     completedAt: {
-        type: Number
+        type: Number,
+        min: [100, "wow, it\'s early dude!"],
+        max: 10000
     }
 });
 
@@ -31,11 +33,11 @@ newTodo.save().then((doc) => {
 var otherTodo = new Todo({
     text: 'Play soccer',
     completed: true,
-    completedAt: 123
+    completedAt: 99
 });
 
 otherTodo.save().then((doc) => {
     console.log('Saved OTHER todo', JSON.stringify(doc, undefined, 2));
 }, (e) => {
-    console.log('Unable to save todo')
+    console.log('Unable to save todo', JSON.stringify(e.errors.completedAt.message, undefined, 2));
 })
